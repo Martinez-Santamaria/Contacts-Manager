@@ -42,13 +42,14 @@ private String phoneNumber;
 
         if (! Files.exists(menuFile)) {
             Files.createFile(menuFile);
+            List<String> contactList = Arrays.asList("Name | Phone number", "Mike Jones | 281-330-8004");
+            Path filepath = Paths.get("src/data", "contacts.txt");
+            Files.write(filepath, contactList);
         }
 
         ///This created the contacts array///
 
-        List<String> contactList = Arrays.asList("Name | Phone number", "Mike Jones | 281-330-8004");
-        Path filepath = Paths.get("src/data", "contacts.txt");
-        Files.write(filepath, contactList);
+
 
 
 
@@ -74,17 +75,20 @@ private String phoneNumber;
 
         int userInput = scanner.nextInt();
 
-        System.out.println("You entered: " + userInput);
+        System.out.println("You entered option: " + userInput);
 
 
         // give feedback to user input
         if (userInput == 1){
             Path contactsPath = Paths.get("src/data", "contacts.txt");
-            contactList = Files.readAllLines(contactsPath);
+            List<String>contactList = Files.readAllLines(contactsPath);
 
             for (String s : contactList) {
                 System.out.println(s);
             }
+
+
+
         } else if (userInput == 2){
             Scanner scanner2 = new Scanner(System.in);
             System.out.println("Enter new user contact name: ");
