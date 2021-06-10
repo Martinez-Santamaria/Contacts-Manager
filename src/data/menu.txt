@@ -1,0 +1,5 @@
+View Contacts
+Add a new contact
+Search a contact by name and/or phone number
+Delete an existing contact
+Exit
