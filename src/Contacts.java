@@ -105,6 +105,10 @@ private String phoneNumber;
                     Arrays.asList(userInput2 + " | " + userInput3), // list with one item
                     StandardOpenOption.APPEND
             );
+
+            System.out.println("You entered new contact: " + userInput2 + " " + userInput3);
+
+
         }
 
 
