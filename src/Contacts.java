@@ -19,6 +19,18 @@ public class Contacts {
             }
         }
     }
+
+    public void deleteContact(Path pathToFile, String searchContact) throws IOException{
+        Scanner scan = new Scanner(pathToFile);
+        System.out.println(scan);
+        int i = 0;
+        while(scan.hasNext()){
+            String line = scan.nextLine().toLowerCase();
+            i++;
+        }
+    }
+
+
             public static void main (String[]args) throws IOException {
         Contacts contact = new Contacts();
 
