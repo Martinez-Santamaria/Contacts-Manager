@@ -3,6 +3,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -21,12 +22,41 @@ public class Contacts {
     }
 
     public void deleteContact(Path pathToFile, String searchContact) throws IOException{
+        Scanner scanner = new Scanner(System.in);
         Scanner scan = new Scanner(pathToFile);
-        System.out.println(scan);
         int i = 0;
         while(scan.hasNext()){
-            String line = scan.nextLine().toLowerCase();
+            String contact = scan.nextLine().toLowerCase();
             i++;
+            if(contact.contains(searchContact)){
+
+                System.out.println("======================================");
+                System.out.println("\n" + contact);
+                System.out.println("======================================");
+                System.out.println("Would you like to delete this contact?");
+                System.out.print("(Y/N) : ");
+
+                String userResponse = scanner.next();
+                if(userResponse.equalsIgnoreCase("yes") || userResponse.equalsIgnoreCase("y")){
+                    //delete the line that our contact was found on
+                    List<String> currentList = new ArrayList<>();
+                    try{
+                        currentList = Files.readAllLines(pathToFile);
+                    }catch(IOException ioe){
+                        ioe.printStackTrace();
+                    }
+                    //remove the line at that index
+                    currentList.remove(i - 1);
+
+                    try{
+                        Files.write(pathToFile, currentList);
+                    }catch(IOException ioe){
+                        ioe.printStackTrace();
+                    }
+                }else{
+                    System.out.println("\nOkay, we wont delete that contact\n");
+                }
+            }
         }
     }
 
@@ -162,7 +192,20 @@ public class Contacts {
 
                         } else
                             userWantsToContinue = false;
-                    }
+
+
+                    } else if (userInput == 4) {
+                        System.out.println("Enter the name of the contact you would like to delete.");
+                        Scanner search = new Scanner(System.in);
+                        String searchContact = search.nextLine();
+                        try {
+                            contact.deleteContact(contactFile, searchContact);
+                        } catch (IOException ioException) {
+                            System.out.println("Error at section #4");
+                            ioException.printStackTrace();
+                        }
+
+                }
 
                 }
                 while (userWantsToContinue);
