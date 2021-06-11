@@ -11,7 +11,7 @@ import java.util.Scanner;
 public class Contacts {
 
 
-    public void searchFile (Path pathToFile , String searchContact) throws IOException {
+    public void searchFile (Path pathToFile, String searchContact) throws IOException {
         Scanner scanner4 = new Scanner(pathToFile);
         while (scanner4.hasNext()) {
             String line = scanner4.nextLine().toLowerCase();
@@ -30,10 +30,7 @@ public class Contacts {
             i++;
             if(contact.contains(searchContact)){
 
-                System.out.println("======================================");
-                System.out.println("\n" + contact);
-                System.out.println("======================================");
-                System.out.println("Would you like to delete this contact?");
+                System.out.println("Would you like to delete this contact: " + contact + "?");
                 System.out.print("(Y/N) : ");
 
                 String userResponse = scanner.next();
@@ -47,6 +44,8 @@ public class Contacts {
                     }
                     //remove the line at that index
                     currentList.remove(i - 1);
+
+                    System.out.println(contact + " has been removed from contact list.\n");
 
                     try{
                         Files.write(pathToFile, currentList);
@@ -112,14 +111,18 @@ public class Contacts {
                 Path menusPath = Paths.get("src/data", "menu.txt");
                 menuList = Files.readAllLines(menusPath);
 
-                for (int i = 0; i < menuList.size(); i += 1) {
-                    System.out.println((i + 1) + ": " + menuList.get(i));
-                }
+//                for (int i = 0; i < menuList.size(); i += 1) {
+//                    System.out.println((i + 1) + ": " + menuList.get(i));
+//                }
 
 
                 //print select option and scanner ///////started do -while loop
                 boolean userWantsToContinue = false;
                 do {
+                    for (int i = 0; i < menuList.size(); i += 1) {
+                        System.out.println((i + 1) + ": " + menuList.get(i));
+                    }
+//                    System.out.println(menuList);
                     System.out.println("Pick an option (1, 2, 3, 4, or 5): \n");
 
                     Scanner scanner = new Scanner(System.in);
@@ -138,7 +141,7 @@ public class Contacts {
                             System.out.println(s);
 
                         }
-                        System.out.println("Would you like to make another selection?");
+                        System.out.println("Would you like to make another selection? [Y/N]");
                         String userAnswer = scanner.next();
                         if (userAnswer.equalsIgnoreCase("y")) {
                             userWantsToContinue = true;
@@ -163,8 +166,8 @@ public class Contacts {
                                 StandardOpenOption.APPEND
                         );
 
-                        System.out.println("You entered new contact: " + userInput2 + " " + userInput3);
-                        System.out.println("Would you like to make another selection?");
+                        System.out.println(userInput2 + " has been added to contacts list.");
+                        System.out.println("Would you like to make another selection? [Y/N]");
                         String userAnswer2 = scanner.next();
                         if (userAnswer2.equalsIgnoreCase("y")) {
                             userWantsToContinue = true;
@@ -176,7 +179,7 @@ public class Contacts {
                     } else if (userInput == 3){
                         System.out.println("Enter the name of the contact you would like to search.");
                         Scanner search = new Scanner(System.in);
-                        String searchContact = search.nextLine();
+                        String searchContact = search.nextLine().toLowerCase();
 
                         try {
                             contact.searchFile(contactFile, searchContact);
@@ -185,7 +188,7 @@ public class Contacts {
                             ioException.printStackTrace();
                         }
 
-                        System.out.println("Would you like to make another selection?");
+                        System.out.println("Would you like to make another selection? [Y/N]");
                         String userAnswer3 = scanner.next();
                         if (userAnswer3.equalsIgnoreCase("y")) {
                             userWantsToContinue = true;
@@ -205,7 +208,18 @@ public class Contacts {
                             ioException.printStackTrace();
                         }
 
-                }
+                        System.out.println("Would you like to make another selection? [Y/N]");
+                        String userAnswer3 = scanner.next();
+                        if (userAnswer3.equalsIgnoreCase("y")) {
+                            userWantsToContinue = true;
+
+                        } else
+                            userWantsToContinue = false;
+
+                } else if (userInput == 5){
+                        System.out.println("See ya later partner.");
+                        break;
+                    }
 
                 }
                 while (userWantsToContinue);
